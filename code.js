@@ -44,7 +44,7 @@ function loadBooks(books, limit=6) {
         try {
         fetch("https://openlibrary.org/search.json?q="+book.Title.replace(/[\W_]+/g," ")+"&limit=1&mode=everything")
         .then(response => response.json())
-        .then(data => fetchCover(data, book), getCover(book))
+        .then(data => fetchCover(data, book))
         } catch(e) {
             console.log(e);
             bookCover.src = defaultBookCover
