@@ -3,7 +3,14 @@ const bookDiv = document.querySelector(".more-books");
 const defaultBookCover = "https://unrulyguides.com/wp-content/uploads/2011/12/generic-cover.jpg"
 let allBooks = {}
 
+
+const mainBookImg = document.querySelector('#main-book-image')
+const mainBookTitle = document.querySelector('.book-title')
+const mainBookAuthor = document.querySelector('.author')
+const mainBookDistrict = document.querySelector('.district-banned')
+
 function loadBooks(books, limit=6) {
+
     books = sortBooks(books);
     // remove previous books from DOM when called
     let child = bookDiv.firstElementChild;
@@ -37,13 +44,11 @@ function loadBooks(books, limit=6) {
         try {
         fetch("https://openlibrary.org/search.json?q="+book.Title.replace(/[\W_]+/g," ")+"&limit=1&mode=everything")
         .then(response => response.json())
-        .then(data => fetchCover(data, book))
+        .then(data => fetchCover(data, book), getCover(book))
         } catch(e) {
             console.log(e);
             bookCover.src = defaultBookCover
         }
-                
-        
         
         bookContainer.append(bookTitle);
         bookContainer.append(bookDesc);
@@ -53,6 +58,12 @@ function loadBooks(books, limit=6) {
         bookDiv.append(bookContainer);
         allBooks[book.id] = bookContainer;
     }
+    // when the loop is done running, populate first book of all books
+
+    // setTimeout(getCover(books[0]), 100)
+    mainBookTitle.textContent = books[0].Title
+    mainBookAuthor.textContent = books[0].Author
+    mainBookDistrict.textContent = books[0].District
 }
 
 async function fetchCover(bookData, book) {
@@ -69,11 +80,13 @@ async function fetchCover(bookData, book) {
     } else {
         allBooks[book.id].children[2].src = defaultBookCover
     }
+// fix this tomorrow
+  getCover( allBooks[book.id])
+}
 
-    
-    
 
-
+function getCover(book0) {
+    mainBookImg.src = console.log(book0.children[2])
 }
 
 function checkCover(returnedCover, bookData, book) {
@@ -85,9 +98,6 @@ function checkCover(returnedCover, bookData, book) {
     }
 }
 
-
-
-const state = "Alaska"
 
 // sort books by title using Obj compare function
 function sortBooks(books) {
@@ -115,7 +125,12 @@ async function fetchBookDetails(book) {
     
 }
 
+// fetchBooksByState(state)
 
 
-fetchBooksByState(state)
+const state = document.querySelector('#state-names')
 
+document.querySelector('#book-search').addEventListener("submit", (e) => {
+    e.preventDefault()
+    fetchBooksByState(state.value)
+})
