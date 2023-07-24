@@ -1,9 +1,9 @@
 // global variables
-const bookDiv = document.querySelector("#books");
+const bookDiv = document.querySelector(".more-books");
 const defaultBookCover = "https://unrulyguides.com/wp-content/uploads/2011/12/generic-cover.jpg"
 let allBooks = {}
 
-function loadBooks(books, limit=5) {
+function loadBooks(books, limit=6) {
     books = sortBooks(books);
     // remove previous books from DOM when called
     let child = bookDiv.firstElementChild;
@@ -25,6 +25,11 @@ function loadBooks(books, limit=5) {
         const bookTitle = document.createElement("h2");
         bookTitle.textContent = book.Title;
         const bookCover = document.createElement("img");
+        const bannedCounty = document.createElement("p");
+        bannedCounty.textContent = "Banned in "+book.District;
+        const dateBanned = document.createElement("p");
+
+
 
         const bookDesc = document.createElement("p");
         bookDesc.textContent = "By "+book.Author;
@@ -43,6 +48,7 @@ function loadBooks(books, limit=5) {
         bookContainer.append(bookTitle);
         bookContainer.append(bookDesc);
         bookContainer.append(bookCover);
+        bookContainer.append(bannedCounty)
         
         bookDiv.append(bookContainer);
         allBooks[book.id] = bookContainer;
@@ -63,6 +69,8 @@ async function fetchCover(bookData, book) {
     } else {
         allBooks[book.id].children[2].src = defaultBookCover
     }
+
+    
     
 
 
@@ -79,7 +87,7 @@ function checkCover(returnedCover, bookData, book) {
 
 
 
-const state = "New_York"
+const state = "Alaska"
 
 // sort books by title using Obj compare function
 function sortBooks(books) {
