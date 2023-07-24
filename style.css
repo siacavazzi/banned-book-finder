@@ -34,11 +34,30 @@ h1 {
 }
 
 .book-container {
+    padding: 40px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-gap: 20px;
+}
+
+#book-detail {
+    padding: 20px;
+}
+
+#reading-list {
+    padding: 20px;
 }
 
 #main-book-image {
     height: 350px;
+}
+
+.quick-facts-container {
+    text-align: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.state-img {
+    width: 300px;
 }
