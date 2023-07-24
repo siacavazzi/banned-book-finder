@@ -1,14 +1,105 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Crystal Lake Fan Club</title>
-        <link rel="stylesheet" type="text/css" href="./style.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nanum+Gothic&display=swap" rel="stylesheet">
-        <script defer src="src/index.js"></script>
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <title>Banned Books Finder</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Castoro+Titling&family=Darumadrop+One&display=swap" rel="stylesheet">
+    <script defer src="src/index.js"></script>
+</head>
 
 
+<body>
+    <header>
+        <h1>Banned Books Finder</h1>
+        <p>Welcome to Banned Books Finder, where you can search your state and find out which books have been banned!</p>
+        <hr/>
+    </header>
+
+    <!-- Book Search -->
+    <form id="book-search">
+        <h2>Search Your State</h2>
+        <label for="state">State: </label>
+        <select name="state-names" id="state-names">
+            <option value="select-a-state">Select a State</option>
+            <option value="alaska">Alaska</option>
+            <option value="arkansas">Arkansas</option>
+            <option value="california">California</option>
+            <option value="colorado">Colorado</option>
+            <option value="florida">Florida</option>
+            <option value="georgia">Georgia</option>
+            <option value="idaho">Idaho</option>
+            <option value="illinois">Illinois</option>
+            <option value="indiana">Indiana</option>
+            <option value="iowa">Iowa</option>
+            <option value="kansas">Kansas</option>
+            <option value="maine">Maine</option>
+            <option value="maryland">Maryland</option>
+            <option value="massachusetts">Massachusetts</option>
+            <option value="michigan">Michigan</option>
+            <option value="minnesota">Minnesota</option>
+            <option value="mississippi">Mississippi</option>
+            <option value="missouri">Missouri</option>
+            <option value="new-jersey">New Jersey</option>
+            <option value="new-york">New York</option>
+            <option value="north-carolina">North Carolina</option>
+            <option value="north-dakota">North Dakota</option>
+            <option value="ohio">Ohio</option>
+            <option value="oklahoma">Oklahoma</option>
+            <option value="oregon">Oregon</option>
+            <option value="pennsylvania">Pennsylvania</option>
+            <option value="rhode-island">Rhode Island</option>
+            <option value="south-carolina">South Carolina</option>
+            <option value="south-dakota">South Dakota</option>
+            <option value="tennessee">Tennessee</option>
+            <option value="texas">Texas</option>
+            <option value="utah">Utah</option>
+            <option value="vermont">Vermont</option>
+            <option value="virginia">Virginia</option>
+            <option value="washington">Washington</option>
+            <option value="wisconsin">Wisconsin</option>
+            <option value="wyoming">Wyoming</option>
+        </select>
+        <input type="submit" value="🔍 Search">
+    </form>
+
+    <!-- Main Book Details -->
+    <div class="book-container">
+        <div id="book-detail">
+            <img id="main-book-image" src="https://www.ragandbonebindery.com/cdn/shop/products/medium_journal_gallery_02_8985f472-d9af-4a97-9ab0-e2537af0b38f_2048x.jpg?v=1652213714">
+            <h2 class="book-title">Book Title</h5>
+            <h3 class="author">Author</h6>
+            <p class="district-banned">District banned</p>
+            <button id="add-to-list">Add to Reading List</button>
+        </div>
+        <!-- Reading List -->
+        <div id="reading-list">
+         <h4 class="reading-list">Reading List</h4>
+        </div>
+    </div>
+
+    <!-- Load 5 books + covers -->
+    <div class="more-books">
+
+    </div>
+
+    <!-- Quick facts: States w most banned books -->
+    <div>
+        <h3>States with The Most Banned Books</h3>
+        
+    </div>
+
+    <!-- Quick facts: States w most banned books -->
+    <div>
+        <h3>Most Frequently Banned Books</h3>
+        
+    </div>
 
 
+</body>
+<footer>
+
+</footer>
 </html>
