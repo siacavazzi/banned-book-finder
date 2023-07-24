@@ -1,0 +1,63 @@
+html {
+    height: 100%;
+    width: 100%;
+    font-family: "Titillium Web", sans-serif;
+  }
+
+header {
+    text-align: center;
+    padding: 0.5rem;
+    width: 100%;
+    color: white;
+    background-color: black;
+}
+
+body {
+    background-color: black;
+    background-size: cover;
+    color: white;
+  }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Castoro Titling', cursive;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+#book-search {
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+}
+
+.book-container {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 20px;
+}
+
+#book-detail {
+    padding: 20px;
+}
+
+#reading-list {
+    padding: 20px;
+}
+
+#main-book-image {
+    height: 350px;
+}
+
+.quick-facts-container {
+    text-align: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.state-img {
+    width: 300px;
+}
