@@ -26,6 +26,11 @@ h1 {
     font-size: 2.5em;
 }
 
+button {
+    font-size: 16px;
+    text-align: center;
+}
+
 #book-search {
     text-align: center;
     margin: auto;
@@ -33,10 +38,15 @@ h1 {
     padding: 20px;
 }
 
-
 .book-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+#state-details {
+    text-align: center;
+    font-size: 40px;
+    color: red;
 }
 
 .more-books {
@@ -46,6 +56,11 @@ h1 {
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 25px;
     grid-row-gap: 25px;
+}
+
+#load-more {
+    display: none;
+    margin: auto;
 }
 
 #book-detail {
@@ -60,10 +75,15 @@ h1 {
     height: 350px;
 }
 
+#quick-facts-title {
+    column-span: all;
+    text-align: center;
+}
+
 .quick-facts-container {
     text-align: center;
+    display:grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 10px;
 }
 
 .state-img {

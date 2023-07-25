@@ -23,20 +23,18 @@ function loadBooks(books=[],limit=6) {
 
     stateDetails.textContent = currentState.replace("_"," ") + " Has " + books.length + " Banned Books"
     // remove previous books from DOM when called
-    // let child = bookDiv.firstElementChild;
-    // while(child) {
-    //     bookDiv.removeChild(child);
-    //     child = bookDiv.firstElementChild;
-    // }
+    let child = bookDiv.firstElementChild;
+    while(child) {
+      bookDiv.removeChild(child);
+      child = bookDiv.firstElementChild;
+     }
     // create each book and append to DOM
 
     if(limit > books.length) {
         limit = books.length;
     }
     for(let i=currBooks;i<limit+currBooks;i++) {
-        console.log(i)
         let book = books[i];
-        console.log(book)
         const bookContainer = document.createElement("div");
         bookContainer.classList.add("book");
         const bookTitle = document.createElement("h2");
@@ -57,11 +55,9 @@ function loadBooks(books=[],limit=6) {
         } catch(e) {
             bookCover.src = defaultBookCover
         }
-        console.log(book)
-        bookContainer.append(bookTitle);
-        bookContainer.append(bookDesc);
-        bookContainer.append(bookCover);
-        bookContainer.append(bannedCounty) 
+
+        bookContainer.append(bookTitle, bookDesc, bookCover, bannedCounty);
+        
         bookDiv.append(bookContainer);
         bookContainer.book = book;
         allBooks[book.id] = bookContainer;
@@ -69,7 +65,6 @@ function loadBooks(books=[],limit=6) {
     }
    
     currBooks = currBooks + limit
-    console.log(currBooks)
 }
 
 function setMainBook(book) {
@@ -124,7 +119,6 @@ async function fetchBooksByState(state) {
 }
 
 async function fetchBookDetails(book) {
-    
 }
 
 const state = document.querySelector('#state-names')
@@ -135,11 +129,12 @@ document.querySelector('#book-search').addEventListener("submit", (e) => {
     //currBooks = 0;
     currentState = state.value;
     fetchBooksByState(state.value);
-
+    loadMore.style.display = 'block';
 })
 
 // event listener for 'Add to Reading List' button
 addToReadingList.addEventListener('click', (e) => {
+
     e.preventDefault()
     checkReadingList()
     
@@ -197,6 +192,7 @@ function renderReadingList() {
 
         removeButton.addEventListener('click', () => {
         e.preventDefault()
+
         readingTitle.remove()
     })
         }
@@ -213,5 +209,7 @@ function checkReadingList() {
 }
 
 loadMore.addEventListener("click", function() {loadBooks(bookList)})
+
 renderReadingList();
+
 console.log(Object.keys(allBooks))
