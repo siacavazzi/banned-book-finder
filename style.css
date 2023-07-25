@@ -34,6 +34,12 @@ h1 {
 }
 
 .book-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.more-books {
+
     padding: 40px;
     display: grid;
     grid-template-columns: 2fr 1fr;
