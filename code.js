@@ -6,37 +6,33 @@ let allBooks = {}
 let bookList = []
 let currentState = ''
 let currBooks = 0
+let currentBook = null;
 const loadMore = document.querySelector("#load-more")
 const stateDetails = document.querySelector("#state-details")
 const mainBookImg = document.querySelector('#main-book-image')
 const mainBookTitle = document.querySelector('.book-title')
 const mainBookAuthor = document.querySelector('.author')
 const mainBookDistrict = document.querySelector('.district-banned')
-
-
 const addToReadingList = document.querySelector('#add-to-list')
 const readingList = document.querySelector('#reading-list')
-
 
 function loadBooks(books=[],limit=6) {
     console.log("loop start" + currBooks)
     bookList = books;
-
     books = sortBooks(books);
 
     stateDetails.textContent = currentState.replace("_"," ") + " Has " + books.length + " Banned Books"
     // remove previous books from DOM when called
     let child = bookDiv.firstElementChild;
     while(child) {
-        bookDiv.removeChild(child);
-        child = bookDiv.firstElementChild;
-    }
+      bookDiv.removeChild(child);
+      child = bookDiv.firstElementChild;
+     }
     // create each book and append to DOM
 
     if(limit > books.length) {
         limit = books.length;
     }
-
     for(let i=currBooks;i<limit+currBooks;i++) {
         let book = books[i];
         const bookContainer = document.createElement("div");
@@ -48,78 +44,60 @@ function loadBooks(books=[],limit=6) {
         bannedCounty.textContent = "Banned in "+book.District;
         const dateBanned = document.createElement("p");
 
-
-
         const bookDesc = document.createElement("p");
         bookDesc.textContent = "By "+book.Author;
         
         try {
         fetch("https://openlibrary.org/search.json?q="+book.Title.replace(/[\W_]+/g," ")+"&limit=1&mode=everything")
         .then(response => response.json())
-
         .then(data => fetchCover(data, book))
 
         } catch(e) {
             bookCover.src = defaultBookCover
         }
+
         bookContainer.append(bookTitle, bookDesc, bookCover, bannedCounty);
         
         bookDiv.append(bookContainer);
+        bookContainer.book = book;
         allBooks[book.id] = bookContainer;
-
-        bookContainer.addEventListener("click",function() {mainBookImg.src = allBooks[book.id].children[2].src})
-        
-        
+        bookContainer.addEventListener("click",function() {setMainBook(book)})
     }
-    // when the loop is done running, populate first book of all books
-
-    //bookContainer.addEventListener("click", getCover(book))
-
-    // setTimeout(getCover(books[0]), 100)
-    mainBookTitle.textContent = books[0].Title
-    mainBookAuthor.textContent = books[0].Author
-    mainBookDistrict.textContent = books[0].District
+   
     currBooks = currBooks + limit
 }
 
-async function fetchCover(bookData, book) {
+function setMainBook(book) {
+    currentBook = book
+    console.log(allBooks[book.id].Title)
+    mainBookTitle.textContent = allBooks[book.id].book.Title
+    mainBookAuthor.textContent = allBooks[book.id].book.Author
+    mainBookDistrict.textContent = allBooks[book.id].book.District
+    mainBookImg.src = allBooks[book.id].children[2].src
+}
 
+async function fetchCover(bookData, book) {
     try {
         if(bookData.docs[0].cover_edition_key !== undefined){
-        
             fetch("https://covers.openlibrary.org/b/olid/"+bookData.docs[0].cover_edition_key+".json")
             .then(resp => resp.json())
             .then(data => checkCover(data, bookData, book))
-    
         } else {
         allBooks[book.id].children[2].src = defaultBookCover
         }
-
     } catch(e) {
             console.log(e);
             allBooks[book.id].children[2].src = defaultBookCover
         }
-    
     }
-// fix this tomorrow
-  //getCover( allBooks[book.id])
-
-
-
-
 
 function checkCover(returnedCover, bookData, book) {
-    
     if(returnedCover.source_url) {
         allBooks[book.id].children[2].src = returnedCover.source_url
     } else {
         allBooks[book.id].children[2].src = defaultBookCover
     }
-
-    //allBooks[book.id].addEventListener("click",console.log("hello"))
 }
-
-
 // sort books by title using Obj compare function
 function sortBooks(books) {
     function compare( a, b ) {
@@ -133,8 +111,6 @@ function sortBooks(books) {
       }
     return books.sort(compare)
 }
-
-
 // fetch banned books by state then call loadBooks to render them on the page
 async function fetchBooksByState(state) {
     fetch("http://localhost:3000/"+state)
@@ -144,7 +120,6 @@ async function fetchBooksByState(state) {
 
 async function fetchBookDetails(book) {
 }
-
 
 const state = document.querySelector('#state-names')
 
@@ -157,58 +132,84 @@ document.querySelector('#book-search').addEventListener("submit", (e) => {
     loadMore.style.display = 'block';
 })
 
-
-
 // event listener for 'Add to Reading List' button
 addToReadingList.addEventListener('click', (e) => {
-    bookTitle = document.querySelector('.book-title')
-    const readingTitle = document.createElement('h5')
-        readingTitle.textContent = `${bookTitle.textContent} `
+
+    e.preventDefault()
+    checkReadingList()
+    
+})
+
+function checkForPost(data) {
+    let alreadyInList = false;
+    console.log(data)
+    for (let readingListBook of data) {
+        console.log(currentBook.Title)
+        console.log(readingListBook.Title)
+        // vvv localeCompare throwing error
+        if(data.length > 0 && (currentBook.Title === readingListBook.Title)) {
+            alreadyInList = true
+            console.log("in list")
+        }
+    }
+    if(!alreadyInList) { 
+    console.log(currentBook.Title)
+    fetch(`http://localhost:3000/ReadingList`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept":"application/json"
+        },
+        body: JSON.stringify({
+            Title:currentBook.Title,
+            Author:currentBook.Author
+        })
+    }).then(renderReadingList())
+    }
+}
+
+function renderReadingList() {
+    let child = readingList.firstElementChild;
+    while(child) {
+        readingList.removeChild(child);
+        child = readingList.firstElementChild;
+    }
+    fetch(`http://localhost:3000/ReadingList`)
+    .then(r=> r.json())
+    .then(data => {
+        for(book of data) {
+            bookTitle = document.querySelector('.book-title')
+        const readingTitle = document.createElement('li')
+        readingTitle.textContent = book.Title
         readingList.append(readingTitle)
 
-    console.log(checkReadingList())
+        console.log(readingList)
+        
 
-    const removeButton = document.createElement('button')
+        const removeButton = document.createElement('button')
         removeButton.textContent = '🗑️'
         readingTitle.append(removeButton)
 
-    removeButton.addEventListener('click', () => {
+        removeButton.addEventListener('click', () => {
+        e.preventDefault()
+
         readingTitle.remove()
     })
-})
+        }
+    })
+}
 
 // function that triggers from each state, first to see which books are in the database. see if the book trying to add is already there based on the title, but if not, then post request to post the title to the reading list
-function checkReadingList(book) {
-    let alreadyInList = false;
+function checkReadingList() {
+    console.log("call");
+    
     fetch(`http://localhost:3000/ReadingList`)
     .then (r => r.json())
-    .then (data => () => {
-        for (let readingListBook of data) {
-            if(book.title === readingListBook.title) {
-                alreadyInList = true
-            }
-        }
-        if(!alreadyInList) { 
-        fetch(`http://localhost:3000/ReadingList`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Accept":"application/json"
-            },
-            body: JSON.stringify({
-                readingListBook,
-            })
-        })
-        .then (r => r.json())
-        .then (data => console.log(data))
-            // POST book object to ReadingList
-        }
-        })
-    }
-    
+    .then (data => checkForPost(data));
+}
 
 loadMore.addEventListener("click", function() {loadBooks(bookList)})
 
+renderReadingList();
+
 console.log(Object.keys(allBooks))
-
-
