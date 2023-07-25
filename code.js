@@ -1,17 +1,24 @@
 // global variables
 const bookDiv = document.querySelector(".more-books");
 const defaultBookCover = "https://unrulyguides.com/wp-content/uploads/2011/12/generic-cover.jpg"
+const defaultBookCoverList = []
 let allBooks = {}
-
-
+let bookList = []
+let currentState = ''
+let currBooks = 0
+const loadMore = document.querySelector("#load-more")
+const stateDetails = document.querySelector("#state-details")
 const mainBookImg = document.querySelector('#main-book-image')
 const mainBookTitle = document.querySelector('.book-title')
 const mainBookAuthor = document.querySelector('.author')
 const mainBookDistrict = document.querySelector('.district-banned')
 
-function loadBooks(books, limit=6) {
-
+function loadBooks(books=[],limit=6) {
+    console.log("loop start" + currBooks)
+    bookList = books;
     books = sortBooks(books);
+
+    stateDetails.textContent = currentState.replace("_"," ") + " Has " + books.length + " Banned Books"
     // remove previous books from DOM when called
     let child = bookDiv.firstElementChild;
     while(child) {
@@ -24,9 +31,10 @@ function loadBooks(books, limit=6) {
         limit = books.length;
     }
 
-    for(let i=0;i<limit;i++) {
+    for(let i=currBooks;i<limit+currBooks;i++) {
+        console.log(i)
         let book = books[i];
-
+        console.log(book)
         const bookContainer = document.createElement("div");
         bookContainer.classList.add("book");
         const bookTitle = document.createElement("h2");
@@ -49,7 +57,7 @@ function loadBooks(books, limit=6) {
             console.log(e);
             bookCover.src = defaultBookCover
         }
-        
+        console.log(book)
         bookContainer.append(bookTitle);
         bookContainer.append(bookDesc);
         bookContainer.append(bookCover);
@@ -57,37 +65,48 @@ function loadBooks(books, limit=6) {
         
         bookDiv.append(bookContainer);
         allBooks[book.id] = bookContainer;
+
+        bookContainer.addEventListener("click",function() {mainBookImg.src = allBooks[book.id].children[2].src})
+        
+        
     }
     // when the loop is done running, populate first book of all books
+
+    //bookContainer.addEventListener("click", getCover(book))
 
     // setTimeout(getCover(books[0]), 100)
     mainBookTitle.textContent = books[0].Title
     mainBookAuthor.textContent = books[0].Author
     mainBookDistrict.textContent = books[0].District
+    currBooks = currBooks + limit
+    console.log(currBooks)
 }
 
 async function fetchCover(bookData, book) {
-    console.log(bookData)
-    if(!(bookData.docs[0] === undefined)) {
-        try {
-        fetch("https://covers.openlibrary.org/b/olid/"+bookData.docs[0].cover_edition_key+".json")
-        .then(resp => resp.json())
-        .then(data => checkCover(data, bookData, book))
-        } catch(e) {
-            console.log(e);
-            allBooks[book.id].src = defaultBookCover
-        }
-    } else {
+
+    try {
+        if(bookData.docs[0].cover_edition_key !== undefined){
+        
+            fetch("https://covers.openlibrary.org/b/olid/"+bookData.docs[0].cover_edition_key+".json")
+            .then(resp => resp.json())
+            .then(data => checkCover(data, bookData, book))
+    
+        } else {
         allBooks[book.id].children[2].src = defaultBookCover
+        }
+
+    } catch(e) {
+            console.log(e);
+            allBooks[book.id].children[2].src = defaultBookCover
+        }
+    
     }
 // fix this tomorrow
-  getCover( allBooks[book.id])
-}
+  //getCover( allBooks[book.id])
 
 
-function getCover(book0) {
-    mainBookImg.src = console.log(book0.children[2])
-}
+
+
 
 function checkCover(returnedCover, bookData, book) {
     
@@ -96,6 +115,8 @@ function checkCover(returnedCover, bookData, book) {
     } else {
         allBooks[book.id].children[2].src = defaultBookCover
     }
+
+    //allBooks[book.id].addEventListener("click",console.log("hello"))
 }
 
 
@@ -131,6 +152,17 @@ async function fetchBookDetails(book) {
 const state = document.querySelector('#state-names')
 
 document.querySelector('#book-search').addEventListener("submit", (e) => {
-    e.preventDefault()
-    fetchBooksByState(state.value)
+    e.preventDefault();
+    bookList = []
+    //currBooks = 0;
+    currentState = state.value;
+    fetchBooksByState(state.value);
+
 })
+
+loadMore.addEventListener("click", function() {loadBooks(bookList)})
+
+
+
+console.log(Object.keys(allBooks))
+
