@@ -33,17 +33,19 @@ h1 {
     padding: 20px;
 }
 
+
 .book-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
 .more-books {
-
     padding: 40px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 25px;
+    grid-row-gap: 25px;
 }
 
 #book-detail {
@@ -66,4 +68,19 @@ h1 {
 
 .state-img {
     width: 300px;
+}
+
+.book {
+    padding: 25px;
+    border-radius: 25px;
+    background-color: gray;
+}
+
+.book img {
+    padding: 20px;
+    height: 300px;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
