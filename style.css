@@ -33,6 +33,12 @@ h1 {
     padding: 20px;
 }
 
+
+.book-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .more-books {
     padding: 40px;
     display: grid;

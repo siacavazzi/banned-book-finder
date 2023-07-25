@@ -13,9 +13,15 @@ const mainBookTitle = document.querySelector('.book-title')
 const mainBookAuthor = document.querySelector('.author')
 const mainBookDistrict = document.querySelector('.district-banned')
 
+
+const addToReadingList = document.querySelector('#add-to-list')
+const readingList = document.querySelector('#reading-list')
+
+
 function loadBooks(books=[],limit=6) {
     console.log("loop start" + currBooks)
     bookList = books;
+
     books = sortBooks(books);
 
     stateDetails.textContent = currentState.replace("_"," ") + " Has " + books.length + " Banned Books"
@@ -52,9 +58,10 @@ function loadBooks(books=[],limit=6) {
         try {
         fetch("https://openlibrary.org/search.json?q="+book.Title.replace(/[\W_]+/g," ")+"&limit=1&mode=everything")
         .then(response => response.json())
+
         .then(data => fetchCover(data, book))
+
         } catch(e) {
-            console.log(e);
             bookCover.src = defaultBookCover
         }
         console.log(book)
@@ -146,8 +153,6 @@ async function fetchBookDetails(book) {
     
 }
 
-// fetchBooksByState(state)
-
 
 const state = document.querySelector('#state-names')
 
@@ -160,9 +165,62 @@ document.querySelector('#book-search').addEventListener("submit", (e) => {
 
 })
 
+
+
+// event listener for 'Add to Reading List' button
+addToReadingList.addEventListener('click', (e) => {
+    e.preventDefault()
+    bookTitle = document.querySelector('.book-title')
+    const readingTitle = document.createElement('h5')
+    readingTitle.textContent = `${bookTitle.textContent} `
+    readingList.append(readingTitle)
+
+    checkReadingList()
+
+    const removeButton = document.createElement('button')
+    removeButton.textContent = '🗑️'
+    readingTitle.append(removeButton)
+
+    removeButton.addEventListener('click', () => {
+        e.preventDefault()
+        readingTitle.remove()
+    })
+})
+
+// function that triggers from each state, first to see which books are in the database. see if the book trying to add is already there based on the title, but if not, then post request to post the title to the reading list
+function checkReadingList(book) {
+    let alreadyInList = false;
+    fetch(`http://localhost:3000/ReadingList`)
+    .then (r => r.json())
+    .then (data => () => {
+        for (let readingListBook of data) {
+            if(book.title === readingListBook.title) {
+                alreadyInList = true
+            }
+        }
+        if(!alreadyInList) { 
+        fetch(`http://localhost:3000/ReadingList`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept":"application/json"
+            },
+            body: JSON.stringify({
+                readingListBook,
+            })
+        })
+        .then (r => r.json())
+        .then (data => console.log(data))
+            // POST book object to ReadingList
+        }
+        })
+    }
+    
+
 loadMore.addEventListener("click", function() {loadBooks(bookList)})
 
 
 
 console.log(Object.keys(allBooks))
+
 
