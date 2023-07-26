@@ -15,6 +15,9 @@ const mainBookAuthor = document.querySelector('.author')
 const mainBookDistrict = document.querySelector('.district-banned')
 const addToReadingList = document.querySelector('#add-to-list')
 const readingList = document.querySelector('#reading-list')
+const currentBookDisplay = document.querySelector("#currentBookNumber")
+const goBackBtn = document.querySelector("#go-back")
+
 
 function loadBooks(books=[],limit=6) {
     console.log("loop start" + currBooks)
@@ -53,7 +56,7 @@ function loadBooks(books=[],limit=6) {
         .then(data => fetchCover(data, book))
 
         } catch(e) {
-            bookCover.src = defaultBookCover
+            bookCover.src = defaultBookCover;
         }
 
         bookContainer.append(bookTitle, bookDesc, bookCover, bannedCounty);
@@ -61,15 +64,17 @@ function loadBooks(books=[],limit=6) {
         bookDiv.append(bookContainer);
         bookContainer.book = book;
         allBooks[book.id] = bookContainer;
-        bookContainer.addEventListener("click",function() {setMainBook(book)})
+        bookContainer.addEventListener("click",function() {setMainBook(book)});
+        
     }
    
-    currBooks = currBooks + limit
+    currBooks = currBooks + limit;
+    
 }
 
 function setMainBook(book) {
+    
     currentBook = book
-    console.log(allBooks[book.id].Title)
     mainBookTitle.textContent = allBooks[book.id].book.Title
     mainBookAuthor.textContent = allBooks[book.id].book.Author
     mainBookDistrict.textContent = allBooks[book.id].book.District
@@ -130,8 +135,18 @@ document.querySelector('#book-search').addEventListener("submit", (e) => {
     currentState = state.value;
     fetchBooksByState(state.value);
     loadMore.style.display = 'block';
+    setFirstBook();
+
+    currentBookDisplay.textContent = "Showing "+currBooks+" of "+bookList.length+" books"
+    
+    
 })
 
+function setFirstBook() {
+    const firstBook = allBooks[Object.keys(allBooks)[0]]
+    console.log(firstBook)
+    setMainBook(firstBook)
+}
 // event listener for 'Add to Reading List' button
 addToReadingList.addEventListener('click', (e) => {
 
@@ -140,6 +155,7 @@ addToReadingList.addEventListener('click', (e) => {
     
 })
 
+// before adding a book to the reading list check to see if its already there
 function checkForPost(data) {
     let alreadyInList = false;
     console.log(data)
@@ -164,10 +180,12 @@ function checkForPost(data) {
             Title:currentBook.Title,
             Author:currentBook.Author
         })
-    }).then(renderReadingList())
+    })
+    renderReadingList()
     }
 }
 
+// fetch reading list from server and display on page
 function renderReadingList() {
     let child = readingList.firstElementChild;
     while(child) {
@@ -183,17 +201,24 @@ function renderReadingList() {
         readingTitle.textContent = book.Title
         readingList.append(readingTitle)
 
-        console.log(readingList)
+        
         
 
         const removeButton = document.createElement('button')
         removeButton.textContent = '🗑️'
+        readingTitle.id = book.id
         readingTitle.append(removeButton)
 
-        removeButton.addEventListener('click', () => {
+        removeButton.addEventListener('click', (e) => {
         e.preventDefault()
+        console.log(e.target.parentElement.id)
+        OPTIONS = {
+            method: 'DELETE'
+        }
+        fetch(`http://localhost:3000/ReadingList/`+e.target.parentElement.id,OPTIONS)
+        .then(readingTitle.remove())
 
-        readingTitle.remove()
+        
     })
         }
     })
@@ -208,8 +233,21 @@ function checkReadingList() {
     .then (data => checkForPost(data));
 }
 
-loadMore.addEventListener("click", function() {loadBooks(bookList)})
+function loadMoreBooks() {
+    loadBooks(bookList)
+    currentBookDisplay.textContent = "Showing "+currBooks+" of "+bookList.length+" books"
+}
+
+function goBack() {
+    if(currBooks > 5) {
+    currBooks -= 12
+    loadBooks(bookList)
+    currentBookDisplay.textContent = "Showing "+currBooks+" of "+bookList.length+" books"
+    }
+}
+loadMore.addEventListener("click", function() {loadMoreBooks()})
+goBackBtn.addEventListener("click", function() {goBack()})
 
 renderReadingList();
 
-console.log(Object.keys(allBooks))
+
