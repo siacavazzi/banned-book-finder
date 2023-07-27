@@ -1,54 +1,29 @@
 {
   "ReadingList": [
     {
-      "Title": "Gender Queer: A Memoir",
-      "Author": "Kobabe, Maia",
-      "id": 1
-    },
-    {
-      "Title": "Felix Ever After",
-      "Author": "Callender, Kacen",
-      "id": 2
-    },
-    {
-      "Title": "Flamer",
-      "Author": "Curato, Mike",
-      "id": 3
-    },
-    {
-      "Title": "The Hate U Give",
-      "Author": "Thomas, Angie",
-      "id": 4
-    },
-    {
-      "Title": "This Book Is Gay",
-      "Author": "Dawson, Juno",
-      "id": 5
-    },
-    {
-      "Title": "33 Snowfish",
-      "Author": "Rapp, Adam",
-      "id": 6
-    },
-    {
-      "Title": "A Court of Mist and Fury",
-      "Author": "Maas, Sarah J.",
-      "id": 7
-    },
-    {
-      "Title": "Lawn Boy",
-      "Author": "Evison, Jonathan",
-      "id": 8
-    },
-    {
       "Title": "47,000 Beads",
       "Author": "Adeyoha, Koja",
       "id": 9
     },
     {
-      "Title": "A Court of Mist and Fury (A Court of Thorns and Roses Series)",
-      "Author": "Maas, Sarah J.",
+      "Title": "This Book Is Gay",
+      "Author": "Dawson, Juno",
       "id": 10
+    },
+    {
+      "Title": "#BlackLivesMatter: Protesting Racism",
+      "Author": "Thomas, Rachael L.",
+      "id": 11
+    },
+    {
+      "Title": "All Boys Aren't Blue",
+      "Author": "Johnson, George M.",
+      "id": 12
+    },
+    {
+      "Title": "Let's Talk About It: The Teen's Guide to Sex, Relationships, and Being a Human (A Graphic Novel)",
+      "Author": "Moen, Erika",
+      "id": 13
     }
   ],
   "Alaska": [

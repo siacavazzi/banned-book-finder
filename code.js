@@ -19,7 +19,7 @@ const currentBookDisplay = document.querySelector("#currentBookNumber")
 const goBackBtn = document.querySelector("#go-back")
 
 
-function loadBooks(books=[],limit=6) {
+function loadBooks(books,limit=6) {
     console.log("loop start" + currBooks)
     bookList = books;
     books = sortBooks(books);
@@ -36,8 +36,13 @@ function loadBooks(books=[],limit=6) {
     if(limit > books.length) {
         limit = books.length;
     }
-    for(let i=currBooks;i<limit+currBooks;i++) {
+    let max = limit + currBooks;
+    if(max > books.length) {
+        max = books.length
+    }
+    for(let i=currBooks;i<max;i++) {
         let book = books[i];
+        console.log(i)
         const bookContainer = document.createElement("div");
         bookContainer.classList.add("book");
         const bookTitle = document.createElement("h2");
@@ -69,6 +74,7 @@ function loadBooks(books=[],limit=6) {
     }
    
     currBooks = currBooks + limit;
+    currentBookDisplay.textContent = "Showing "+currBooks+" of "+bookList.length+" books"
     
 }
 
@@ -131,19 +137,21 @@ const state = document.querySelector('#state-names')
 document.querySelector('#book-search').addEventListener("submit", (e) => {
     e.preventDefault();
     bookList = []
-    //currBooks = 0;
+    currBooks = 0;
+
+
     currentState = state.value;
     fetchBooksByState(state.value);
     loadMore.style.display = 'block';
-    setFirstBook();
+    setTimeout(setFirstBook,800)
 
     currentBookDisplay.textContent = "Showing "+currBooks+" of "+bookList.length+" books"
     
     
 })
 
-function setFirstBook() {
-    const firstBook = allBooks[Object.keys(allBooks)[0]]
+async function setFirstBook() {
+    const firstBook = allBooks[Object.keys(allBooks)[0]].book
     console.log(firstBook)
     setMainBook(firstBook)
 }
@@ -201,9 +209,6 @@ function renderReadingList() {
         readingTitle.textContent = book.Title
         readingList.append(readingTitle)
 
-        
-        
-
         const removeButton = document.createElement('button')
         removeButton.textContent = '🗑️'
         readingTitle.id = book.id
@@ -234,15 +239,14 @@ function checkReadingList() {
 }
 
 function loadMoreBooks() {
+    if(!(currBooks == bookList.length) )
     loadBooks(bookList)
-    currentBookDisplay.textContent = "Showing "+currBooks+" of "+bookList.length+" books"
 }
 
 function goBack() {
-    if(currBooks > 5) {
+    if(currBooks > 6) {
     currBooks -= 12
     loadBooks(bookList)
-    currentBookDisplay.textContent = "Showing "+currBooks+" of "+bookList.length+" books"
     }
 }
 loadMore.addEventListener("click", function() {loadMoreBooks()})
