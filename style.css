@@ -42,8 +42,6 @@ button {
     padding: 30px;
 }
 
-/* some way to make the book container follow user around */
-
 #state-details {
     text-align: center;
     font-size: 2em;
@@ -57,12 +55,16 @@ button {
 }
 
 .book {
-    width: 50px;
+    width: 280px;
 }
 
-#load-more {
-    display: none;
-    margin: auto;
+.load-more-books {
+    /* display: none; */
+    display:flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    align-items: center;
+    grid-gap: 2em;
 }
 
 #book-detail {
@@ -87,13 +89,18 @@ button {
 .quick-facts-container {
     text-align: center;
     display: flex;
-    grid-gap: 20px;
+    grid-gap: 2em;
     justify-content: center;
     align-items: flex-end;
+    margin: 3em;
 }
 
 .state-img {
-    width: 300px;
+    width: 15em;
+}
+
+.book-img {
+    height: 20em;
 }
 
 .book {
