@@ -8,11 +8,31 @@
     <script defer src="code.js"></script>
 </head>
 <body>
+   
+    <!-- Main Book Details -->
+    <div class="book-container">
+        <div id="book-detail">
+            <img id="main-book-image" src="https://www.ragandbonebindery.com/cdn/shop/products/medium_journal_gallery_02_8985f472-d9af-4a97-9ab0-e2537af0b38f_2048x.jpg?v=1652213714">
+            <h2 class="book-title">Book Title</h5>
+            <h3 class="author">Author</h6>
+            <p class="district-banned">District banned</p>
+            <button id="add-to-list">Add to Reading List</button>
+        </div>
+        <!-- Reading List -->
+        <div class="reading-list-container">
+            <h4 class="reading-list">Reading List</h4>
+            <div id="reading-list">         
+            </div>
+        </div>
+    </div>
+
+    <div id="everything">
     <header>
         <h1>Banned Books Finder</h1>
         <p>Welcome to Banned Books Finder, where you can search your state and find out which books have been banned!</p>
-        <hr/>
+        
     </header>
+    
 
     <!-- Book Search -->
     <form id="book-search">
@@ -62,22 +82,7 @@
         <input type="submit" value="🔍 Search">
     </form>
 
-    <!-- Main Book Details -->
-    <div class="book-container">
-        <div id="book-detail">
-            <img id="main-book-image" src="https://www.ragandbonebindery.com/cdn/shop/products/medium_journal_gallery_02_8985f472-d9af-4a97-9ab0-e2537af0b38f_2048x.jpg?v=1652213714">
-            <h2 class="book-title">Book Title</h5>
-            <h3 class="author">Author</h6>
-            <p class="district-banned">District banned</p>
-            <button id="add-to-list">Add to Reading List</button>
-        </div>
-        <!-- Reading List -->
-        <div class="reading-list-container">
-            <h4 class="reading-list">Reading List</h4>
-            <div id="reading-list">         
-            </div>
-        </div>
-    </div>
+    
 
     <!-- State Details -->
     <div>
@@ -127,6 +132,8 @@
             <img class="book-img" alt="All Boys Aren't Blue by George M. Johnson" src="https://pictures.abebooks.com/isbn/9780374312718-us.jpg">
             <p>with 14 bans</p>
         </div>
+    </div>
+
     </div>
 </body>
 <footer>

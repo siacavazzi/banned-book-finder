@@ -88,6 +88,7 @@ function setMainBook(book) {
 }
 
 async function fetchCover(bookData, book) {
+    console.log(bookData)
     try {
         if(bookData.docs[0].cover_edition_key !== undefined){
             fetch("https://covers.openlibrary.org/b/olid/"+bookData.docs[0].cover_edition_key+".json")
