@@ -1,5 +1,31 @@
 {
-  "ReadingList": [],
+  "ReadingList": [
+    {
+      "Title": "Gender Queer: A Memoir",
+      "Author": "Kobabe, Maia",
+      "id": 1
+    },
+    {
+      "Title": "Let's Talk About It: The Teen's Guide to Sex, Relationships, and Being a Human (A Graphic Novel)",
+      "Author": "Moen, Erika",
+      "id": 2
+    },
+    {
+      "Title": "Flamer",
+      "Author": "Curato, Mike",
+      "id": 3
+    },
+    {
+      "Title": "After We Collided (After Series)",
+      "Author": "Todd, Anna",
+      "id": 4
+    },
+    {
+      "Title": "#Hockey (Check, Please! Series)",
+      "Author": "Ukazu, Ngozi",
+      "id": 5
+    }
+  ],
   "Alaska": [
     {
       "Author": "Kobabe, Maia",
