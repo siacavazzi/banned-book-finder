@@ -1,29 +1,34 @@
 {
   "ReadingList": [
     {
-      "Title": "Gender Queer: A Memoir",
-      "Author": "Kobabe, Maia",
+      "Title": "A Day in the Life of Marlon Bundo",
+      "Author": "Twiss, Jill",
       "id": 1
     },
     {
-      "Title": "Let's Talk About It: The Teen's Guide to Sex, Relationships, and Being a Human (A Graphic Novel)",
-      "Author": "Moen, Erika",
+      "Title": "All Boys Aren't Blue",
+      "Author": "Johnson, George M.",
       "id": 2
     },
     {
-      "Title": "Flamer",
-      "Author": "Curato, Mike",
+      "Title": "Dear Martin",
+      "Author": "Stone, Nic",
       "id": 3
     },
     {
-      "Title": "After We Collided (After Series)",
-      "Author": "Todd, Anna",
+      "Title": "Lawn Boy",
+      "Author": "Evison, Jonathan",
       "id": 4
     },
     {
-      "Title": "#Hockey (Check, Please! Series)",
-      "Author": "Ukazu, Ngozi",
+      "Title": "Gender Queer: A Memoir",
+      "Author": "Kobabe, Maia",
       "id": 5
+    },
+    {
+      "Title": "Jack of Hearts (and other parts)",
+      "Author": "Rosen, L. C.",
+      "id": 6
     }
   ],
   "Alaska": [
