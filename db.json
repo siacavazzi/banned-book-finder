@@ -1,23 +1,23 @@
 {
   "ReadingList": [
     {
-      "Title": "A Day in the Life of Marlon Bundo",
-      "Author": "Twiss, Jill",
+      "Title": "#BlackLivesMatter: Protesting Racism",
+      "Author": "Thomas, Rachael L.",
       "id": 1
     },
     {
-      "Title": "All Boys Aren't Blue",
-      "Author": "Johnson, George M.",
+      "Title": "10,000 Dresses",
+      "Author": "Ewert, Marcus",
       "id": 2
     },
     {
-      "Title": "Dear Martin",
-      "Author": "Stone, Nic",
+      "Title": "A Certain Slant of Light",
+      "Author": "Whitcomb, Laura",
       "id": 3
     },
     {
-      "Title": "Lawn Boy",
-      "Author": "Evison, Jonathan",
+      "Title": "A Day in the Life of Marlon Bundo",
+      "Author": "Twiss, Jill",
       "id": 4
     },
     {
@@ -26,9 +26,19 @@
       "id": 5
     },
     {
-      "Title": "Jack of Hearts (and other parts)",
-      "Author": "Rosen, L. C.",
+      "Title": "All Boys Aren't Blue",
+      "Author": "Johnson, George M.",
       "id": 6
+    },
+    {
+      "Title": "Me and Earl and the Dying Girl",
+      "Author": "Andrews, Jesse",
+      "id": 7
+    },
+    {
+      "Title": "Almost Perfect",
+      "Author": "Katcher, Brian",
+      "id": 8
     }
   ],
   "Alaska": [
